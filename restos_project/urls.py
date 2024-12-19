@@ -8,7 +8,9 @@ Function views
     1. Add an import:  from my_app import vies
     2. Add a URL to urlpatterns:  path('', views.home, name='home')
 Class-based views
-    1. Add an import:  from others_app.viewse import Home
+
+    1. Add an import:  from others_apps.views import Home
+
     2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
 Including another URLconf
     1. Import the include() function: from django.urls import include, path
