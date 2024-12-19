@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Labels</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        @page {
+            margin: 0;
+            size: 4in 0.85in;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f4f4;
+            padding: 0.1in 0.15in 0 0.1in;
+            height: 100%;
+        }
+        .container-grid {
+            display: grid;
+            grid-template-columns: 35mm 35mm 35mm;
+            grid-auto-rows: 22mm;
+            grid-gap: 1mm;
+            width: 100%;
+            padding: 0;
+            box-sizing: border-box;
+            
+        }
+        .label-container {
+            width: 35mm;
+            height: 22mm;
+            box-sizing: border-box;
+            display: flex;
+            margin-top: 0px;
+            overflow: hidden;
+        }
+        .label-container:nth-child(3n+2) {
+         margin-left: 10px; /* Ensure first container in every row has no extra left margin */
+     }
+        
+        .label-container:nth-child(3n){
+            margin-left: 20px;
+            overflow: hidden;
+        }
+        .label-container:nth-child(n+4) {
+            margin-top: 8px; /* Ensures no top space for the next rows */
+        }
+        .left-side {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+            font-size: 7px;
+            width: 50%;
+        }
+        .right-side {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-end; /* Align content to the right */
+            font-size: 7px;
+            width: 50%;
+            gap: 3px; /* Space between elements */
+        }
+        .barcode-div, .product-div, .amount-div {
+            width: 100%; /* Ensure full-width alignment */
+            margin-right: 20px;
+        }
+        .product-info {
+            font-size: 10px;
+            font-weight: bold;
+            text-align: left;
+            margin-top: -1px;
+        }
+        .dates {
+            text-align: left;
+            font-size: 7.5px;
+            font-weight: bold;
+            margin-top: -7px;
+        }
+        .qrcode-container {
+            margin-left: 1px;
+            text-align: left;
+            width: 30px;
+            height: 40px;
+            margin-bottom: -10px;
+        }
+        .barcode-text {
+            font-size: 8px;
+            font-weight: bold;
+            text-align: center; /* Center-align barcode */
+            margin-top: -20px;
+        }
+
+        .Product {
+            font-size: 12px;
+            font-weight: bold;
+            text-align: center; /* Center-align product */
+            margin-top: 12px;
+        }
+
+        .amount {
+            font-size: 12px;
+            font-weight: bold;
+            color: #d9534f;
+            text-align: center; /* Center-align amount */
+            margin-top: -20px;
+            margin-bottom: 30px;
+        }
+
+
+    </style>
+</head>
+<body onload="printAndClose()">
+    <div class="container-grid">
+        {{ label_html|safe }}
+    </div>
+
+    <script>
+        {{ qrcode_scripts|safe }}
+
+        function printAndClose() {
+            window.print();
+            setTimeout(function() {
+                window.close();
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

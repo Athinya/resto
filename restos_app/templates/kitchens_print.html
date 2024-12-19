@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Print Document</title>
+    <style>
+        @page {
+            margin: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            font-weight: bold;
+        }
+        .container {
+            width: 3in;
+            margin: auto;
+        }
+        .header {
+            text-align: center;
+        }
+        .info {
+            text-align: center;
+            margin-bottom: 7px;
+            font-size: 12px;
+            margin-top: -10px;
+        }
+        .info p {
+            margin: 5px 0;
+        }
+        .bill-info, .productitem-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            margin: 12px 10px;
+        }
+        .bill-info.table-no {
+            margin-bottom: -27px;
+        }
+        .bill-info.date-time {
+            margin-bottom: -15px;
+        }
+        .bill-info.sname {
+            margin-bottom: 10px;
+            margin-top: -10px;
+        }
+        .hyphen-line {
+            text-align: center;
+            margin: -20px;
+        }
+        .product-info {
+            display: flex;
+            justify-content: flex-start;
+            width: 50%;
+        }
+        .balance-info {
+            display: flex;
+            justify-content: flex-end;
+            width: 50%;
+            padding-right: 30px;
+        }
+        .productitem-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        .info_items{
+            margin-bottom: 5px;
+            margin-top: 5px;
+        }
+        .items-list {
+            margin-top: 0px;
+        }
+        /* New class to move kitchen time to the left */
+        .Kitchan_times {
+            text-align: left;
+            margin-left: 50px; /* Adjust margin as needed */
+        }
+    </style>
+</head>
+<body onload="printAndClose()">
+    <div class="container">
+        <div class="header">
+            <h3>{{ header }} - {{ table_No }}</h3>
+        </div>
+        <div class="bill-info table-no">
+            <p>Table No: {{ table_No }}</p>
+        </div>
+        <div class="bill-info date-time">
+            <p>Date: {{ date }}</p>
+            <p class="Kitchan_times">Time: {{ kitchen_time }}</p> <!-- Left-aligned kitchen time -->
+        </div>
+        <div class="bill-info sname">
+            <p>SName: {{ servent }}</p>
+        </div>
+        <div class="hyphen-line">------------------------------------------------------</div>
+        <div class="productitem-info info_items" style="font-weight: bold;">
+            <div class="product-info" style="font-size: 15px;">
+                <p>Product</p>
+            </div>
+            <div class="balance-info" style="font-size: 15px;">
+                <p>Qty</p>
+            </div>
+        </div> 
+        <div class="hyphen-line">------------------------------------------------------</div>
+        
+        <!-- Loop through items and insert them here -->
+        <div class="items-list">
+            {% for item in items %}
+                <div class="productitem-info" style="margin-bottom: -25px;">
+                    <div class="product-info">
+                        <p>{{ item.name }}</p>
+                    </div>
+                    <div class="balance-info">
+                        <p>{{ item.qty }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script>
+        function printAndClose() {
+            window.print();
+            setTimeout(function() {
+                window.close();
+            }, 1000);  // Print dialog kaatanum, adhu apram page auto-close agum
+        }
+    </script>
+</body>
+</html>

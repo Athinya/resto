@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Report</title>
+    <style>
+        @page {
+            margin: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0 auto;
+        }
+        .container {
+            width: 3in;
+            margin: auto;
+        }
+        .header {
+            text-align: center;
+        }
+        .hyphen-line {
+            text-align: center;
+            margin-top: -20px;
+            padding: 0;
+        }
+        .hyphen-line.first {
+            margin-bottom: -5px;
+        }
+        .hyphen-line.second {
+            margin-top: 0; /* Removed top space for the second hyphen line */
+            margin-bottom: -10px;
+            padding-bottom: 0;
+            font-weight: bold;
+        }
+        table {
+            width: 100%;
+            font-size: 13px;
+            border-collapse: collapse;
+            line-height: 1.5em;
+        }
+        td {
+            padding: 5px 5px;
+        }
+        .header-row td {
+            padding-bottom: 1px;
+            margin-top: 10px;
+        }
+        /* Move Product heading and values to the right */
+        .product-align {
+            padding-left: 10px;
+            text-align: left;
+        }
+        /* Keep Qty heading and values as they are */
+        .qty-heading {
+            text-align: right;
+        }
+        .qty-value {
+            text-align: right;
+            padding-right: 15px;
+            font-weight: bold;
+        }
+        /* Move Amount heading and value slightly left */
+        .amount-heading {
+            text-align: right;
+            padding-right: 10px; /* Adjust the padding-right to move heading left */
+        }
+        .amount-value {
+            text-align: right;
+            padding-right: 20px; /* Move Amount values slightly left */
+        }
+        .count-class {
+            margin-bottom: -10px;
+            padding-bottom: 0;
+            margin-top: -5px;
+            font-weight: bold;
+        }
+
+        /* Adjust the bottom margin based on the number of rows dynamically */
+        .dynamic-bottom-space {
+            margin-bottom: -10px; /* Default bottom space */
+        }
+
+        /* Reduce the bottom margin further for multiple headings */
+        .dynamic-bottom-space.more {
+            margin-bottom: -30px; /* Reduce more when needed */
+        }
+
+        /* Flexbox for date and time alignment */
+        .date-time {
+            display: flex;
+            justify-content: space-between;
+            margin-top: -25px;
+            margin-bottom: 5px;
+            font-size: 10px;
+        }
+        .date-left {
+            text-align: left;
+            padding-left: 15px; /* Add padding to move date slightly to the right */
+        }
+        .time-right {
+            text-align: right;
+            padding-right: 15px;
+        }
+        .header-reports {
+            margin-top: -15px; /* Adjust this to move Daily Reports closer */
+            margin-bottom: 0;  /* Adjust bottom margin */
+        }
+
+    </style>
+    <script>
+        window.onload = function() {
+            window.print();
+            setTimeout(function () {
+                window.close();
+            }, 1000);
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h3>{{ restaurant_name }}</h3>
+        </div>
+        <div class="header header-reports">
+            <h3>Daily Reports</h3>
+        </div>
+        <div class="date-time">
+            <div class="date-left">
+                <h3>Date: {{ date }}</h3>
+            </div>
+            <div class="time-right">
+                <h3>Time: {{ time }}</h3>
+            </div>
+        </div>
+        <div class="hyphen-line first">
+            ------------------------------------------------------
+        </div>
+        <table>
+            <tr class="header-row dynamic-bottom-space {% if items|length > 3 %}more{% endif %}" style="font-weight: bold;">
+                <td class="product-align">Product</td>
+                <td class="qty-heading">Count</td> <!-- Qty heading stays in place -->
+                <td class="amount-heading">Amount</td> <!-- Amount heading slightly moved left -->
+            </tr>
+            <tr class="hyphen-line second">
+                <td colspan="3" class="hyphen-line second">----------------------------------------------------------------</td>
+            </tr>
+            {% for item in items %}
+            <tr class="count-class">
+                <td class="product-align">{{ item.name }}</td>
+                <td class="qty-value">{{ item.qty_count }}</td> <!-- Qty value stays in place -->
+                <td class="amount-value">{{ item.amount_count }}</td> <!-- Amount value slightly moved left -->
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>
