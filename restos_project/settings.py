@@ -13,7 +13,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import os
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdirs'.
+
+# Build paths inside the project like this: BASE_DIRs / 'subdir'.
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
